@@ -7,9 +7,11 @@ Develop a library application with following features:
 3. Lease a Book to a Reader, return date is mandatory. Reader can not have more than three books.
 4. Expose restful API that talks JSON for listing books and their availablility, searching by author and by genre
 
+Application must be developed using PHP7.4+ and Symfony 5.x. Solutions employing other frameworks will not be accepted.
+
 Resulting code must have meaningful tests. 
 
-You can use whatever tools you find necessarry and helpful, except jQuery and API Platform.
+You can use whatever tools you find necessary and helpful, except jQuery and API Platform.
 
 Bonus points for:
 
