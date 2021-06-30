@@ -1,0 +1,18 @@
+services:
+  app:
+    image: webdevops/php-nginx-dev:7.4-alpine
+    volumes:
+      - ./gimmemore:/app
+    environment:
+      WEB_DOCUMENT_ROOT: "/app/public"
+    ports:
+      - "8080:80"
+  db:
+    image: mysql:8.0.25
+    environment:
+      MYSQL_DATABASE: gimmemore
+      MYSQL_USER: api
+      MYSQL_PASSWORD: 123
+      MYSQL_ALLOW_EMPTY_PASSWORD: 1
+    ports:
+    - "33061:3306"
