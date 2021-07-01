@@ -54,8 +54,9 @@ class ReaderController extends AbstractController
     public function update(int $id, Request $request): Response
     {
         $content = json_decode($request->getContent(), true);
+        $reader = $this->readerRepository->find($id);
 
-        $book = $this->readerRepository->find($id);
+        //TODO update reader if exists
 
         $this->entityManager->flush();
 

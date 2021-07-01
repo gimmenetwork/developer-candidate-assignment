@@ -26,6 +26,7 @@ class AuthorController extends AbstractController
      */
     public function index(Request $request): Response
     {
+        //TODO
         $filters = $request->query->all();
 
         return $this->json(
@@ -54,8 +55,9 @@ class AuthorController extends AbstractController
     public function update(int $id, Request $request): Response
     {
         $content = json_decode($request->getContent(), true);
+        $author = $this->authorRepository->find($id);
 
-        $book = $this->authorRepository->find($id);
+        //TODO edit author
 
         $this->entityManager->flush();
 
