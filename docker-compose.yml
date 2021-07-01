@@ -1,6 +1,8 @@
 services:
   app:
-    image: webdevops/php-nginx-dev:7.4-alpine
+    build:
+      context: .
+      dockerfile: Dockerfile
     volumes:
       - ./gimmemore:/app
     environment:
