@@ -13,13 +13,13 @@ class LeaseFactory
     /**
      * @throws \Exception
      */
-    public static function build(Book $book, Reader $reader, string $returnAt, bool $isReturned): Lease
+    public static function build(Book $book, Reader $reader, string $returnAt, bool $isReturned = false): Lease
     {
         $lease = new Lease();
-        $lease->setCreatedAt(new \DateTime());
+        $lease->setCreatedAt(new \DateTimeImmutable());
         $lease->setBook($book);
         $lease->setReader($reader);
-        $lease->setReturnAt(new \DateTime($returnAt));
+        $lease->setReturnAt(new \DateTimeImmutable($returnAt));
         $lease->setIsReturned($isReturned);
 
         return $lease;

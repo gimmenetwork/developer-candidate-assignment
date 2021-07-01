@@ -110,13 +110,13 @@ class BookController extends AbstractController
         $book = $this->bookRepository->find($bookId);
         $reader = $this->readerRepository->find($content['reader_id']);
 
-        $readerLeases = $this->leaseRepository->count(['reader_id' => $reader->getId()]);
+        $readerLeases = $this->leaseRepository->count(['reader' => $reader]);
 
         if ($readerLeases == self::MAX_ALLOWED_READER_LEASES) {
             throw new \Exception('readers can not lease more than three books at the same time');
         }
 
-        $lease = LeaseFactory::build($book, $reader, $content['return_at'], $content['is_returned']);
+        $lease = LeaseFactory::build($book, $reader, $content['return_at']);
 
         $this->entityManager->persist($lease);
         $this->entityManager->flush();
