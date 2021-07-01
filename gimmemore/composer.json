@@ -30,7 +30,11 @@
         "ext-json": "*"
     },
     "require-dev": {
-        "symfony/maker-bundle": "^1.32"
+        "phpunit/phpunit": "^9.5",
+        "symfony/browser-kit": "^5.3",
+        "symfony/css-selector": "^5.3",
+        "symfony/maker-bundle": "^1.32",
+        "symfony/phpunit-bridge": "^5.3"
     },
     "config": {
         "optimize-autoloader": true,
