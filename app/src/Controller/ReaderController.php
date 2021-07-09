@@ -30,10 +30,14 @@ class ReaderController extends AbstractController implements AuthenticationInter
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->readerService->saveReader($form->getData());
+            try{
+                $this->readerService->saveReader($form->getData());
 
-            $this->addFlash('success',$form->getData()['name'].' is saved');
-            return $this->redirectToRoute('homepage');
+                $this->addFlash('success',$form->getData()['name'].' is saved');
+                return $this->redirectToRoute('homepage');
+            }catch (\Exception $e){
+                $this->addFlash('error',$e->getMessage());
+            }
         }
 
         return $this->render ( 'newreader.html.twig', array (

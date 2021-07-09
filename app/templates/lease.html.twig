@@ -12,7 +12,7 @@
 
         <h3>Readers</h3>
         {% for reader in readers %}
-            {% if reader.bookStates|length < lease_limit %}
+            {% if current_leases(reader)|length < lease_limit %}
                 <a href="{{ path('leaseBook', {book: book.id,reader: reader.id}) }}">{{ reader.name }}</a><br>
             {% endif %}
         {% endfor %}

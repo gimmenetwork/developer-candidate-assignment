@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\BookState;
+use App\Entity\Reader;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -19,32 +20,14 @@ class BookStateRepository extends ServiceEntityRepository
         parent::__construct($registry, BookState::class);
     }
 
-    // /**
-    //  * @return BookState[] Returns an array of BookState objects
-    //  */
-    /*
-    public function findByExampleField($value)
-    {
-        return $this->createQueryBuilder('b')
-            ->andWhere('b.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('b.id', 'ASC')
-            ->setMaxResults(10)
+    public function getCurrentLeases(Reader $reader){
+        return $this->createQueryBuilder('r')
+            ->where('r.reader = :readerId')
+            ->andWhere('r.return_date IS NULL')
+            ->setParameter('readerId',$reader->getId())
             ->getQuery()
-            ->getResult()
-        ;
+            ->getResult();
     }
-    */
 
-    /*
-    public function findOneBySomeField($value): ?BookState
-    {
-        return $this->createQueryBuilder('b')
-            ->andWhere('b.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
-    }
-    */
+
 }

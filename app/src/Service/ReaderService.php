@@ -2,9 +2,7 @@
 
 namespace App\Service;
 
-use App\Repository\BookStateRepository;
 use App\Repository\ReaderRepository;
-use Doctrine\ORM\EntityManagerInterface;
 
 class ReaderService
 {
@@ -25,10 +23,15 @@ class ReaderService
     }
 
     /**
-     * @return array
+     * @param array $readerData
+     * @throws \Exception
      */
-    public function saveReader(array $readerData)
+    public function saveReader(array $readerData): void
     {
+        $isSet = $this->readerRepository->findOneBy(['name'=>$readerData['name']]);
+        if($isSet){
+            throw new \Exception('Duplicate reader name');
+        }
         $this->readerRepository->save($readerData['name']);
     }
 

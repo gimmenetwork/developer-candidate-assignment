@@ -50,40 +50,11 @@ class BookRepository extends ServiceEntityRepository
     }
 
     public function save(string $name, string $author, string $genre){
-        $newbook = new Book();
-        $newbook->setName($name);
-        $newbook->setAuthor($author);
-        $newbook->setGenre($genre);
-        $this->getEntityManager()->persist($newbook);
+        $newBook = new Book();
+        $newBook->setName($name);
+        $newBook->setAuthor($author);
+        $newBook->setGenre($genre);
+        $this->getEntityManager()->persist($newBook);
         $this->getEntityManager()->flush();
     }
-
-    // /**
-    //  * @return Book[] Returns an array of Book objects
-    //  */
-    /*
-    public function findByExampleField($value)
-    {
-        return $this->createQueryBuilder('b')
-            ->andWhere('b.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('b.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
-    }
-    */
-
-    /*
-    public function findOneBySomeField($value): ?Book
-    {
-        return $this->createQueryBuilder('b')
-            ->andWhere('b.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
-    }
-    */
 }

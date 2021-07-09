@@ -20,7 +20,6 @@ class HomeController extends AbstractController
         private AuthService $authService,
     )
     {
-
     }
 
     #[Route('/', name: 'homepage')]

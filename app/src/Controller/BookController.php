@@ -8,7 +8,6 @@ use App\Entity\Reader;
 use App\Service\BookService;
 use App\Service\ReaderService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\HttpFoundation\Request;
@@ -20,27 +19,34 @@ class BookController extends AbstractController implements AuthenticationInterfa
     public function __construct(
         private BookService $bookService,
         private ReaderService $readerService
-    ){
-
+    )
+    {
     }
 
     #[Route('/lease/{book}/{reader}', name: 'leaseBook')]
     public function lease(Book $book, Reader $reader = NULL): Response
     {
-        if($reader){
-            $this->bookService->leaseBook($book,$reader);
+        if ($reader) {
+            try {
+                $this->bookService->leaseBook($book, $reader);
 
-            $this->addFlash(
-                'success',
-                $book->getName().' is leased to '.$reader->getName()
-            );
-            return $this->redirectToRoute('homepage');
+                $this->addFlash(
+                    'success',
+                    $book->getName() . ' is leased to ' . $reader->getName()
+                );
+                return $this->redirectToRoute('homepage');
+            } catch (\Exception $e) {
+                $this->addFlash(
+                    'error',
+                    $e->getMessage()
+                );
+            }
+
         }
 
         $readers = $this->readerService->getAllReaders();
 
-        return $this->render ( 'lease.html.twig', array (
-            //'form' => $form->createView(),
+        return $this->render('lease.html.twig', array(
             'lease_limit' => ReaderService::LEASE_LIMIT,
             'book' => $book,
             'readers' => $readers
@@ -54,7 +60,7 @@ class BookController extends AbstractController implements AuthenticationInterfa
 
         $this->addFlash(
             'success',
-            $book->getName().' is returned'
+            $book->getName() . ' is returned'
         );
         return $this->redirectToRoute('homepage');
     }
@@ -72,13 +78,17 @@ class BookController extends AbstractController implements AuthenticationInterfa
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->bookService->saveBook($form->getData());
+            try {
+                $this->bookService->saveBook($form->getData());
 
-            $this->addFlash('success',$form->getData()['name'].' is saved');
-            return $this->redirectToRoute('homepage');
+                $this->addFlash('success', $form->getData()['name'] . ' is saved');
+                return $this->redirectToRoute('homepage');
+            } catch (\Exception $e) {
+                $this->addFlash('error', $e->getMessage());
+            }
         }
 
-        return $this->render ( 'newbook.html.twig', array (
+        return $this->render('newbook.html.twig', array(
             'form' => $form->createView()
         ));
     }

@@ -6,12 +6,14 @@ use App\Entity\Book;
 use App\Entity\BookState;
 use App\Entity\Reader;
 use App\Repository\BookRepository;
+use App\Repository\BookStateRepository;
 use Doctrine\ORM\EntityManagerInterface;
 
 class BookService
 {
     public function __construct(
         private BookRepository $bookRepository,
+        private BookStateRepository $bookStateRepository,
         private EntityManagerInterface $em
     )
     {
@@ -26,6 +28,7 @@ class BookService
     }
 
     /**
+     * @param array $filterData
      * @return array
      */
     public function filterBooks(array $filterData): array
@@ -42,10 +45,18 @@ class BookService
     }
 
     /**
-     * @return array
+     * @param \App\Entity\Book $book
+     * @param \App\Entity\Reader $reader
+     * @throws \Exception
      */
-    public function leaseBook(Book $book, Reader $reader)
+    public function leaseBook(Book $book, Reader $reader): void
     {
+        $currentLeaseCount = count($this->bookStateRepository->getCurrentLeases($reader));
+
+        if($currentLeaseCount >= ReaderService::LEASE_LIMIT){
+            throw new \Exception('User leased already '.ReaderService::LEASE_LIMIT. 'books');
+        }
+
         $bookState = new BookState();
         $bookState->setBook($book);
         $bookState->setReader($reader);
@@ -57,9 +68,9 @@ class BookService
     }
 
     /**
-     * @return array
+     * @param \App\Entity\Book $book
      */
-    public function returnBook(Book $book)
+    public function returnBook(Book $book): void
     {
         $book->getTaken()->setReturnDate(new \DateTime());
         $book->setTaken(null);
@@ -68,10 +79,16 @@ class BookService
     }
 
     /**
-     * @return array
+     * @param array $bookData
+     * @throws \Exception
      */
-    public function saveBook(array $bookData)
+    public function saveBook(array $bookData): void
     {
+        $isSet = $this->bookRepository->findOneBy(['name'=>$bookData['name']]);
+        if($isSet){
+            throw new \Exception("Duplicate Book name");
+        }
+
         $this->bookRepository->save($bookData['name'], $bookData['author'], $bookData['genre']);
     }
 
