@@ -1,0 +1,32 @@
+{% extends 'base.html.twig' %}
+
+{% block navbar %}
+    {% include 'navbar.html.twig' %}
+{% endblock %}
+
+{% block body %}
+    {% include 'alert.html.twig' %}
+
+    <div style="width: 30%; margin: 0 auto;">
+        {{ form(form) }}
+    </div>
+
+
+
+    <div style="width: 30%; margin: 20px auto;">
+        <h3>Books</h3>
+        {% for book in books %}
+            <div class="book-row">
+                <span>{{ book.name }}</span>
+
+                {% if app.session.get('isLogin') %}
+                    {% if book.taken is null %}
+                        <a class="lease" href="{{ path('leaseBook', {book: book.id}) }}">Lease to a reader</a>
+                    {% else %}
+                        <a class="return" href="{{ path('returnBook', {book: book.id}) }}">Make Returned ({{ book.taken.reader.name }})</a>
+                    {% endif %}
+                {% endif %}
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}

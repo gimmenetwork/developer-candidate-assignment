@@ -1,0 +1,52 @@
+div#form div{
+    margin: 7px 0;
+}
+
+div#form label{
+    width: 20%;
+}
+div#form input{
+    width: 79%;
+    float:right;
+}
+div#form select{
+    width: 79%;
+    float:right;
+}
+
+
+
+.book-row{
+    margin:4px 0;
+}
+.book-row a{
+    float:right;
+}
+.book-row a.lease{
+    color:#0f6674;
+}
+.book-row a.return{
+    color:#0069d9;
+}
+
+
+.navbar{
+    text-align: right;
+    width: 100%;
+}
+.navbar a{
+    margin-right: 10px;
+}
+
+
+.alert{
+    width: 100%;
+    margin: 0 auto;
+    text-align: center;
+}
+.alert .error{
+    color: #a71d2a;
+}
+.alert .success{
+    color: #1c7430;
+}

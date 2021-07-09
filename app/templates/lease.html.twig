@@ -1,0 +1,20 @@
+{% extends 'base.html.twig' %}
+
+{% block navbar %}
+    {% include 'navbar.html.twig' %}
+{% endblock %}
+
+{% block body %}
+    {% include 'alert.html.twig' %}
+
+    <div style="width: 30%; margin: 20px auto;">
+        <h2>Lease the book "{{ book.name }}" to</h2>
+
+        <h3>Readers</h3>
+        {% for reader in readers %}
+            {% if reader.bookStates|length < lease_limit %}
+                <a href="{{ path('leaseBook', {book: book.id,reader: reader.id}) }}">{{ reader.name }}</a><br>
+            {% endif %}
+        {% endfor %}
+    </div>
+{% endblock %}
