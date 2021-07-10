@@ -34,6 +34,7 @@ class ApiTest extends WebTestCase
         $this->assertArrayHasKey('id',$responseData[0]);
         $this->assertArrayHasKey('name',$responseData[0]);
         $this->assertArrayHasKey('is_available',$responseData[0]);
+        $this->assertIsBool($responseData[0]['is_available']);
     }
 
 

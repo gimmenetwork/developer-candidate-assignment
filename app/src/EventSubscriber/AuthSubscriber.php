@@ -3,19 +3,14 @@
 namespace App\EventSubscriber;
 
 use App\Contracts\AuthenticationInterface;
-use App\Controller\HomeController;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
-use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpKernel\Event\ControllerEvent;
-use Symfony\Component\HttpKernel\Event\ExceptionEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
 
 class AuthSubscriber implements EventSubscriberInterface
 {
-    private bool $isAuthenticated = true;
-
     public function __construct(
         private RequestStack $requestStack
     )

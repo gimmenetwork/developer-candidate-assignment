@@ -14,7 +14,7 @@ class ReaderFixtures extends Fixture
      */
     protected $faker;
 
-    const READER_FIXTURE_REFERANCE = "reader_fixture";
+    const READER_FIXTURE_REFERENCE = "reader_fixture";
 
     public function load(ObjectManager $manager)
     {
@@ -27,7 +27,7 @@ class ReaderFixtures extends Fixture
 
             $manager->persist($record);
 
-            $this->addReference(self::READER_FIXTURE_REFERANCE . '_' . $i, $record);
+            $this->addReference(self::READER_FIXTURE_REFERENCE . '_' . $i, $record);
         }
 
         $manager->flush();

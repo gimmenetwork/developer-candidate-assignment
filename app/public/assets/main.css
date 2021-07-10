@@ -1,52 +1,66 @@
-div#form div{
+.right {
+    float: right;
+}
+.left {
+    float: left;
+}
+
+.myForm div {
     margin: 7px 0;
 }
-
-div#form label{
+.myForm label {
     width: 20%;
 }
-div#form input{
+.myForm input {
     width: 79%;
-    float:right;
+    float: right;
 }
-div#form select{
+.myForm select {
     width: 79%;
-    float:right;
+    float: right;
 }
 
 
-
-.book-row{
-    margin:4px 0;
+.book-row {
+    margin: 4px 0;
 }
-.book-row a{
-    float:right;
+.book-row a {
+    float: right;
 }
-.book-row a.lease{
-    color:#0f6674;
+.book-row a.lease {
+    color: #0f6674;
 }
-.book-row a.return{
-    color:#0069d9;
+.book-row a.return {
+    color: #0069d9;
 }
-
-
-.navbar{
-    text-align: right;
-    width: 100%;
-}
-.navbar a{
+.book-row a.editLink {
     margin-right: 10px;
 }
+.reader-row a {
+    float: right;
+}
 
 
-.alert{
+.navbar {
+    width: 100%;
+    display: inline-block;
+}
+.navbar a {
+    margin-right: 10px;
+}
+.navbar .right {
+    text-align: right;
+}
+
+
+.alert {
     width: 100%;
     margin: 0 auto;
     text-align: center;
 }
-.alert .error{
+.alert .error {
     color: #a71d2a;
 }
-.alert .success{
+.alert .success {
     color: #1c7430;
 }

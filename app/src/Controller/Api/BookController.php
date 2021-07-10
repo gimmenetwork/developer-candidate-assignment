@@ -2,14 +2,9 @@
 
 namespace App\Controller\Api;
 
-use App\Entity\Book;
-use App\Entity\Reader;
 use App\Service\BookService;
-use App\Service\ReaderService;
 use App\Validators\GetBooksValidator;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;

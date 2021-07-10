@@ -2,14 +2,15 @@
 
 namespace App\Service;
 
-use App\Repository\ReaderRepository;
+use App\Contracts\ReaderRepositoryInterface;
+use App\Entity\Reader;
 
 class ReaderService
 {
     CONST LEASE_LIMIT = 3;
 
     public function __construct(
-        private ReaderRepository $readerRepository
+        private ReaderRepositoryInterface $readerRepository
     )
     {
     }
@@ -33,6 +34,19 @@ class ReaderService
             throw new \Exception('Duplicate reader name');
         }
         $this->readerRepository->save($readerData['name']);
+    }
+
+    /**
+     * @param \App\Entity\Reader $reader
+     * @throws \Exception
+     */
+    public function editReader(Reader $reader): void
+    {
+        if($reader->getName() ==""){
+            throw new \Exception('Invalid Edit Data');
+        }
+
+        $this->readerRepository->edit($reader);
     }
 
 }

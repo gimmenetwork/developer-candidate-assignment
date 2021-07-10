@@ -16,7 +16,7 @@ class BookFixtures extends Fixture
 
     const GENRES = ["action","classics","comic","fantasy","fiction","horror"];
 
-    const BOOK_FIXTURE_REFERANCE = "book_fixture";
+    const BOOK_FIXTURE_REFERENCE = "book_fixture";
 
     public function load(ObjectManager $manager)
     {
@@ -31,7 +31,7 @@ class BookFixtures extends Fixture
 
             $manager->persist($record);
 
-            $this->addReference(self::BOOK_FIXTURE_REFERANCE . '_' . $i, $record);
+            $this->addReference(self::BOOK_FIXTURE_REFERENCE . '_' . $i, $record);
         }
 
         $manager->flush();

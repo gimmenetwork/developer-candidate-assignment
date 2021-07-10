@@ -1,9 +1,17 @@
 <div class="navbar">
-    {% if app.session.get('isLogin') %}
-        <a href="{{ path('newReader') }}">Add Reader</a>
-        <a href="{{ path('newBook') }}">Add Book</a>
-        <a href="{{ path('logout') }}">Logout</a>
-    {% else %}
-        <a href="{{ path('login') }}">Login</a>
-    {% endif %}
+    <div class="left">
+        {% if backlink is defined %}
+            <a href="{{ backlink }}"> < Back</a>
+        {% endif %}
+    </div>
+
+    <div class="right">
+        {% if app.session.get('isLogin') %}
+            <a href="{{ path('newReader') }}">Add/List Readers</a>
+            <a href="{{ path('newBook') }}">Add/List Books</a>
+            <a href="{{ path('logout') }}">Logout</a>
+        {% else %}
+            <a href="{{ path('login') }}">Login</a>
+        {% endif %}
+    </div>
 </div>

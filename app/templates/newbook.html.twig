@@ -1,5 +1,6 @@
 {% extends 'base.html.twig' %}
 
+{% set backlink = path('homepage')  %}
 {% block navbar %}
     {% include 'navbar.html.twig' %}
 {% endblock %}
@@ -11,4 +12,20 @@
         {{ form(form) }}
     </div>
 
+    <div style="width: 30%; margin: 20px auto;">
+        <h3>Books</h3>
+        {% for book in books %}
+            <div class="book-row">
+                <span>{{ book.name }}</span>
+
+                <a class="deleteLink" onclick="return confirm('Are you sure?');" href="{{ path('deleteBook', {book: book.id}) }}">Delete</a>
+                <a class="editLink" href="{{ path('editBook', {book: book.id}) }}">Edit</a>
+            </div>
+        {% endfor %}
+    </div>
+
+{% endblock %}
+
+{% block backlink %}
+    asdasda
 {% endblock %}

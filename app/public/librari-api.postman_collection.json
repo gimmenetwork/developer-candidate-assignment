@@ -1,0 +1,31 @@
+{
+	"variables": [],
+	"info": {
+		"name": "librari-api",
+		"_postman_id": "8b99fb0a-db51-dc7f-4d0c-83b250ee309a",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "http://localhost:8080/api/get-books",
+			"request": {
+				"url": "http://localhost:8080/api/get-books",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"genre\": \"\",\n\t\"author\":\"\"\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		}
+	]
+}

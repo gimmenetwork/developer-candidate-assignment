@@ -2,18 +2,18 @@
 
 namespace App\Service;
 
+use App\Contracts\BookRepositoryInterface;
+use App\Contracts\BookStateRepositoryInterface;
 use App\Entity\Book;
 use App\Entity\BookState;
 use App\Entity\Reader;
-use App\Repository\BookRepository;
-use App\Repository\BookStateRepository;
 use Doctrine\ORM\EntityManagerInterface;
 
 class BookService
 {
     public function __construct(
-        private BookRepository $bookRepository,
-        private BookStateRepository $bookStateRepository,
+        private BookRepositoryInterface $bookRepository,
+        private BookStateRepositoryInterface $bookStateRepository,
         private EntityManagerInterface $em
     )
     {
@@ -33,7 +33,7 @@ class BookService
      */
     public function filterBooks(array $filterData): array
     {
-        return $this->bookRepository->filter($filterData['name'], $filterData['author'], $filterData['genre']);
+        return $this->bookRepository->filter($filterData['name'] ?? "", $filterData['author'] ?? "", $filterData['genre'] ?? "");
     }
 
     /**
@@ -54,7 +54,7 @@ class BookService
         $currentLeaseCount = count($this->bookStateRepository->getCurrentLeases($reader));
 
         if($currentLeaseCount >= ReaderService::LEASE_LIMIT){
-            throw new \Exception('User leased already '.ReaderService::LEASE_LIMIT. 'books');
+            throw new \Exception('User leased already '.ReaderService::LEASE_LIMIT. ' books');
         }
 
         $bookState = new BookState();
@@ -93,11 +93,35 @@ class BookService
     }
 
     /**
+     * @param \App\Entity\Book $book
+     * @throws \Exception
+     */
+    public function editBook(Book $book): void
+    {
+        if($book->getName() == "" || $book->getAuthor() == "" || $book->getGenre() == ""){
+            throw new \Exception('Invalid Edit Data');
+        }
+
+        $this->bookRepository->edit($book);
+    }
+
+    /**
+     * @param \App\Entity\Book $book
+     * @throws \Exception
+     */
+    public function deleteBook(Book $book): void
+    {
+        $this->bookRepository->delete($book);
+    }
+
+    /**
      * @return array
      */
     public function getGenreList(): array
     {
         $genres = $this->bookRepository->getDistinctGenre();
+
+        //prepare data for select box
         foreach ($genres as $genre) {
             $data[$genre['genre']] = $genre['genre'];
         }

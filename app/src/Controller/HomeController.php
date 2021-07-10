@@ -2,13 +2,11 @@
 
 namespace App\Controller;
 
+use App\Form\Type\FilterType;
+use App\Form\Type\LoginType;
 use App\Service\AuthService;
 use App\Service\BookService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-use Symfony\Component\Form\Extension\Core\Type\PasswordType;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -27,15 +25,9 @@ class HomeController extends AbstractController
     {
         $genreList = $this->bookService->getGenreList();
 
-        $form = $this->createFormBuilder()
-            ->add('name', TextType::class, ["required"=>false])
-            ->add('author', TextType::class, ["required"=>false])
-            ->add('genre', ChoiceType::class, [
-                'choices' => array_merge(["Select Genre" => ""], $genreList),
-                'required' => false
-            ])
-            ->add('filter', SubmitType::class)
-            ->getForm();
+        $form = $this->createForm(FilterType::class, NULL, [
+            'genre_list' => $genreList,
+        ]);
 
         $form->handleRequest($request);
 
@@ -54,12 +46,7 @@ class HomeController extends AbstractController
     #[Route('/login', name: 'login')]
     public function login(Request $request): Response
     {
-        $form = $this->createFormBuilder()
-            ->add('username', TextType::class)
-            ->add('password', PasswordType::class)
-            ->add('login', SubmitType::class)
-            ->getForm();
-
+        $form = $this->createForm(LoginType::class);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {

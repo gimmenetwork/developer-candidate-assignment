@@ -26,8 +26,21 @@ You can find a postman export file on public folder
 
 `http://localhost:8080`
 
+Login credentials
+`admin:password`
+
 ## Unit Test
 
 In php container;
 
 `php bin/phpunit`
+
+
+##Possible feature improvements
+- Login credentials stored on DB
+- Different DB connection for UnitTests
+- Pagination
+- Remembering filter parameters after transactions-redirections
+- More test scenarios
+- Off course more UI :)
+

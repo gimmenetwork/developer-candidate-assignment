@@ -50,8 +50,8 @@ class WebTest extends WebTestCase
         $this->assertResponseIsSuccessful();
 
         $this->client->submitForm('Login', [
-            'form[username]' => 'invalid',
-            'form[password]' => 'data',
+            'login[username]' => 'invalid',
+            'login[password]' => 'data',
         ]);
 
         $this->assertSelectorTextContains('span', 'Wrong credentials');
@@ -65,8 +65,8 @@ class WebTest extends WebTestCase
         $this->assertResponseIsSuccessful();
 
         $this->client->submitForm('Login', [
-            'form[username]' => 'admin',
-            'form[password]' => 'password',
+            'login[username]' => 'admin',
+            'login[password]' => 'password',
         ]);
         $this->client->followRedirect();
         $this->assertSelectorTextContains('h3', 'Books');
@@ -81,17 +81,17 @@ class WebTest extends WebTestCase
         $this->client->request('GET', '/login');
         $this->assertResponseIsSuccessful();
         $this->client->submitForm('Login', [
-            'form[username]' => 'admin',
-            'form[password]' => 'password',
+            'login[username]' => 'admin',
+            'login[password]' => 'password',
         ]);
         $this->client->followRedirect();
 
-        $this->client->clickLink('Add Book');
+        $this->client->clickLink('Add/List Books');
         $this->assertResponseIsSuccessful();
         $this->client->submitForm('Add', [
-            'form[name]' => $bookName,
-            'form[author]' => 'testAuthor',
-            'form[genre]' => 'horror',
+            'book[name]' => $bookName,
+            'book[author]' => 'testAuthor',
+            'book[genre]' => 'horror',
         ]);
         $this->client->followRedirect();
 
@@ -105,26 +105,26 @@ class WebTest extends WebTestCase
         $this->client->request('GET', '/login');
         $this->assertResponseIsSuccessful();
         $this->client->submitForm('Login', [
-            'form[username]' => 'admin',
-            'form[password]' => 'password',
+            'login[username]' => 'admin',
+            'login[password]' => 'password',
         ]);
         $this->client->followRedirect();
 
-        $this->client->clickLink('Add Book');
+        $this->client->clickLink('Add/List Books');
         $this->assertResponseIsSuccessful();
         $this->client->submitForm('Add', [
-            'form[name]' => $bookName,
-            'form[author]' => 'testAuthor',
-            'form[genre]' => 'horror',
+            'book[name]' => $bookName,
+            'book[author]' => 'testAuthor',
+            'book[genre]' => 'horror',
         ]);
         $this->client->followRedirect();
 
-        $this->client->clickLink('Add Book');
+        $this->client->clickLink('Add/List Books');
         $this->assertResponseIsSuccessful();
         $this->client->submitForm('Add', [
-            'form[name]' => $bookName,
-            'form[author]' => 'testAuthor',
-            'form[genre]' => 'horror',
+            'book[name]' => $bookName,
+            'book[author]' => 'testAuthor',
+            'book[genre]' => 'horror',
         ]);
 
         $this->assertSelectorTextContains('span', 'Duplicate Book name');
@@ -137,22 +137,22 @@ class WebTest extends WebTestCase
         $this->client->request('GET', '/login');
         $this->assertResponseIsSuccessful();
         $this->client->submitForm('Login', [
-            'form[username]' => 'admin',
-            'form[password]' => 'password',
+            'login[username]' => 'admin',
+            'login[password]' => 'password',
         ]);
         $this->client->followRedirect();
 
-        $this->client->clickLink('Add Reader');
+        $this->client->clickLink('Add/List Readers');
         $this->assertResponseIsSuccessful();
-        $this->client->submitForm('Add', [
-            'form[name]' => $readerName
+        $this->client->submitForm('Save', [
+            'reader[name]' => $readerName
         ]);
         $this->client->followRedirect();
 
-        $this->client->clickLink('Add Reader');
+        $this->client->clickLink('Add/List Readers');
         $this->assertResponseIsSuccessful();
-        $this->client->submitForm('Add', [
-            'form[name]' => $readerName
+        $this->client->submitForm('Save', [
+            'reader[name]' => $readerName
         ]);
 
         $this->assertSelectorTextContains('span', 'Duplicate reader name');
