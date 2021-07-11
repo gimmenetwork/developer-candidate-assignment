@@ -2,15 +2,20 @@
 
 namespace App\EventSubscriber;
 
+use App\Contracts\ApiAuthenticationInterface;
 use App\Contracts\AuthenticationInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpKernel\Event\ControllerEvent;
+use Symfony\Component\HttpKernel\Event\ExceptionEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
 
 class AuthSubscriber implements EventSubscriberInterface
 {
+    private bool $isAuthenticated = true;
+
     public function __construct(
         private RequestStack $requestStack
     )
@@ -35,6 +40,24 @@ class AuthSubscriber implements EventSubscriberInterface
                 });
             }
         }
+
+        if ($controller instanceof ApiAuthenticationInterface) {
+            $session = $this->requestStack->getSession();
+            if (!$session->has('isLogin') || $session->get('isLogin') != 1) {
+                $event->setController(function() {
+                    $this->isAuthenticated = false;
+                    throw new \Exception("Not authorized!");
+                });
+            }
+        }
+    }
+
+    public function onKernelException(ExceptionEvent $event)
+    {
+        if (!$this->isAuthenticated) {
+            $response = new JsonResponse(["error" => "Not authorized!"],403);
+            $event->setResponse($response);
+        }
     }
 
 
@@ -42,7 +65,8 @@ class AuthSubscriber implements EventSubscriberInterface
     public static function getSubscribedEvents()
     {
         return [
-            KernelEvents::CONTROLLER => ['onKernelController']
+            KernelEvents::CONTROLLER => ['onKernelController',1],
+            KernelEvents::EXCEPTION => ['onKernelException',0]
         ];
     }
 }

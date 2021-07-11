@@ -24,6 +24,15 @@ class ReaderService
     }
 
     /**
+     * @param array $filterData
+     * @return array
+     */
+    public function filterReaders(array $filterData): array
+    {
+        return $this->readerRepository->filter($filterData['name'] ?? "");
+    }
+
+    /**
      * @param array $readerData
      * @throws \Exception
      */

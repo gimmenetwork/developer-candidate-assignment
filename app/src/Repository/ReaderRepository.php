@@ -20,6 +20,20 @@ class ReaderRepository extends ServiceEntityRepository implements ReaderReposito
         parent::__construct($registry, Reader::class);
     }
 
+    public function filter(string $name): array
+    {
+        $query = $this->createQueryBuilder('r');
+
+        if ($name != "") {
+            $query->where('r.name LIKE :name');
+            $query->setParameter('name', '%' . $name . '%');
+        }
+
+        return $query
+            ->getQuery()
+            ->getResult();
+    }
+
     public function save(string $name): void
     {
         $newReader = new Reader();

@@ -38,6 +38,7 @@ In php container;
 
 ##Possible feature improvements
 - Login credentials stored on DB
+- OAuth for RestApi  
 - Different DB connection for UnitTests
 - Pagination
 - Remembering filter parameters after transactions-redirections
