@@ -1,0 +1,9 @@
+twig:
+    default_path: '%kernel.project_dir%/templates'
+    form_themes: ['default/form_theme.html.twig']
+    globals:
+        navigation: '%navigation%'
+
+when@test:
+    twig:
+        strict_variables: true

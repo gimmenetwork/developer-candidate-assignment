@@ -1,0 +1,9 @@
+body {
+    overflow-x: hidden;
+}
+
+span.required:before  {
+    content: '*';
+    color: rgb(220,38,38);
+    margin-right: 5px;
+}

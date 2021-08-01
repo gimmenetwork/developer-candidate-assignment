@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+
+{% set parsed_route = app.request.get('_route')|split('_') %}
+{% set form_title_key = 'form.'~parsed_route|last %}
+{% set trans_parameters = {'%label%': parsed_route|first|slice(0, -1)} %}
+{% if app.request.attributes.has('id') %}
+    {% set trans_parameters = trans_parameters|merge({'%entity_id%': app.request.attributes.get('id')}) %}
+{% endif %}
+{% block title %}{{ form_title_key|trans(trans_parameters)|default('Form') }}{% endblock %}
+
+{% block title_class %}w-6/12 mx-auto{% endblock %}
+{% block body_class %}w-6/12 mx-auto{% endblock %}
+
+{% block body %}
+{{ form_start(form) }}
+<div class="shadow sm:rounded-md sm:overflow-hidden">
+    <div class="px-4 py-5 bg-white space-y-6 sm:p-6">
+        {{ form(form) }}
+    </div>
+    <div class="px-4 py-3 bg-gray-50 text-right sm:px-6">
+          <a href="{{ app.request.server.get('HTTP_REFERER') }}" class="inline-flex items-center px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+            Cancel
+          </a>
+        <button type="submit" class="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+            Save
+        </button>
+    </div>
+</div>
+{{ form_end(form) }}
+{% endblock %}

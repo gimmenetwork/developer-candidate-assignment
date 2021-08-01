@@ -1,0 +1,52 @@
+{% use 'tailwind_2_layout.html.twig' %}
+
+{% block form_row %}
+    {% set row_attr = row_attr|merge({ class: row_attr.class|default(row_class|default('block mb-6')) }) %}
+    {% set widget_attr = {} %}
+    {% if help is not empty %}
+        {% set widget_attr = {attr: {'aria-describedby': id ~"_help"}} %}
+    {% endif %}
+    <label{% with {attr: row_attr} %}{{ block('attributes') }}{% endwith %}>
+        {{ form_label(form) }}
+        {{ form_errors(form) }}
+        {{ form_widget(form, widget_attr) }}
+        {{ form_help(form) }}
+    </label>
+{% endblock form_row %}
+
+{% block widget_attributes %}
+    {% set attr = attr|merge({ class: attr.class|default(widget_class|default('form-input mt-1 block w-full rounded-md bg-gray-100 border-transparent focus:border-gray-500 focus:bg-white focus:ring-0')) ~ (disabled ? ' ' ~ widget_disabled_class|default('border-gray-300 text-gray-500')) ~ (errors|length ? ' ' ~ widget_errors_class|default('border-red-700')) }) %}
+    {{ parent() }}
+{% endblock widget_attributes %}
+
+{% block form_label %}
+    {% set element = 'span' %}
+    {% set label_class = label_class|default('text-gray-700') %}
+{#    {% if required %}#}
+{#        {% set label_class = label_class ~ ' required' %}#}
+{#    {% endif %}#}
+    {{ parent() }}
+{% endblock %}
+
+{% block checkbox_widget %}
+    {% set widget_class = widget_class|default('rounded bg-gray-200 border-transparent focus:border-transparent focus:bg-gray-200 text-gray-700 focus:ring-1 focus:ring-offset-2 focus:ring-gray-500 mr-2') %}
+    {{ parent() }}
+{% endblock %}
+
+{% block checkbox_row %}
+    {% set row_attr = row_attr|merge({ class: row_attr.class|default(row_class|default('mb-6')) }) %}
+    {% set widget_attr = {} %}
+    {% if help is not empty %}
+        {% set widget_attr = {attr: {'aria-describedby': id ~"_help"}} %}
+    {% endif -%}
+    <div{% with {attr: row_attr} %}{{ block('attributes') }}{% endwith %}>
+        {{ form_errors(form) }}
+        <div>
+            <label class="inline-flex items-center">
+                {{ form_widget(form, widget_attr) }}
+                {{ form_label(form) }}
+            </label>
+        </div>
+        {{ form_help(form) }}
+    </div>
+{% endblock checkbox_row %}

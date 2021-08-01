@@ -1,0 +1,27 @@
+{% extends 'default/list.html.twig' %}
+
+{% block title %}Books{% endblock %}
+
+{% block table_header_columns %}
+<th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Name</th>
+<th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Author</th>
+<th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Genre</th>
+<th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">ISBN</th>
+{% endblock %}
+
+{% block table_body_columns %}
+<td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900" data-field="name">{{ entity.name }}</td>
+<td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900" data-field="author">{{ entity.author }}</td>
+<td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900" data-field="genre">{{ entity.genre }}</td>
+<td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900" data-field="isbn">{{ entity.isbn|default('-') }}</td>
+{% endblock %}
+
+{% block list_actions %}
+<button data-url="{{ url((parsed_route|first ~ '_lease'), { id: entity.id }) }}" class="text-indigo-600 hover:text-indigo-900 inline-flex items-center mr-2 lease-button">
+    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+    </svg>
+    Lease
+</button>
+{% include 'default/list_actions.html.twig' %}
+{% endblock %}

@@ -1,0 +1,71 @@
+<?php
+
+declare(strict_types=1);
+
+namespace App\Service;
+
+use Symfony\Component\Form\FormError;
+use Symfony\Component\Form\FormInterface;
+use Symfony\Contracts\Translation\TranslatorInterface;
+
+/**
+ * Serializes invalid Form instances.
+ */
+final class FormErrorSerializerService
+{
+    /**
+     * @var TranslatorInterface
+     */
+    private TranslatorInterface $translator;
+
+    /**
+     * FormErrorSerializer constructor.
+     *
+     * @param TranslatorInterface $translator
+     */
+    public function __construct(TranslatorInterface $translator)
+    {
+        $this->translator = $translator;
+    }
+
+    /**
+     * @param FormInterface $data
+     *
+     * @return array
+     */
+    public function convertFormToArray(FormInterface $data): array
+    {
+        $form = $errors = [];
+
+        foreach ($data->getErrors() as $error) {
+            $errors[] = $this->getErrorMessage($error);
+        }
+
+        if ($errors) {
+            $form['errors'] = $errors;
+        }
+
+        $children = [];
+        foreach ($data->all() as $child) {
+            if ($child instanceof FormInterface) {
+                $children[$child->getName()] = $this->convertFormToArray($child);
+            }
+        }
+
+        if ($children) {
+            $form['children'] = $children;
+        }
+
+        return $form;
+    }
+
+    /**
+     * @param FormError $error
+     *
+     * @return string
+     */
+    private function getErrorMessage(FormError $error): string
+    {
+        return $this->translator->trans($error->getMessageTemplate(), $error->getMessageParameters(), 'validators');
+    }
+}

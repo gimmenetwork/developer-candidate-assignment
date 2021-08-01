@@ -1,0 +1,51 @@
+### Successful test: check response status is 200
+GET https://localhost/api/books
+
+> {%
+client.test("Request executed successfully", function() {
+  client.assert(response.status === 200, "Response status is not 200");
+});
+%}
+
+### Check response status and content-type
+GET https://localhost/api/books
+
+> {%
+client.test("Request executed successfully", function() {
+  client.assert(response.status === 200, "Response status is not 200");
+});
+
+client.test("Response content-type is json", function() {
+  var type = response.contentType.mimeType;
+  client.assert(type === "application/json", "Expected 'application/json' but received '" + type + "'");
+});
+%}
+
+### Check response body
+GET https://localhost/api/books
+
+> {%
+client.test("Pagination options exists", function() {
+  client.assert(response.body.hasOwnProperty("results"), "Cannot find 'results' option in response");
+  client.assert(response.body.hasOwnProperty("total"), "Cannot find 'total' option in response");
+  client.assert(response.body.hasOwnProperty("pageSize"), "Cannot find 'pageSize' option in response");
+});
+%}
+
+### Filter books with author name
+GET https://localhost/api/books?author=dan
+
+> {%
+client.test("Search books with author name", function() {
+  client.assert(response.body.total >  0, "No data");
+});
+%}
+
+### Filter books with author name
+GET https://localhost/api/books?genre=fan
+
+> {%
+client.test("Search books with author name", function() {
+  client.assert(response.body.total >  0, "No data");
+});
+%}

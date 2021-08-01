@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>{% block title %}Welcome!{% endblock %}</title>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tailwindcss/custom-forms@0.2.1/dist/custom-forms.min.css">
+        <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
+        <link rel="stylesheet" href="/assets/app.css">
+    </head>
+    <body>
+        <div class="flex flex-row min-h-screen bg-gray-100 text-gray-800">
+            <aside class="sidebar w-64 md:shadow transform -translate-x-full md:translate-x-0 transition-transform duration-150 ease-in bg-indigo-800">
+                <div class="sidebar-header flex items-center justify-center py-4">
+                    <div class="inline-flex">
+                        <a href="#" class="inline-flex flex-row items-center">
+                            <span class="leading-10 text-gray-100 text-2xl font-bold ml-1 uppercase">Assignment</span>
+                        </a>
+                    </div>
+                </div>
+                <div class="sidebar-content px-4 py-6">
+                    <ul class="flex flex-col w-full">
+                        {% for item in navigation %}
+                            <li class="my-px">
+                                <a href="{{ url(item.route) }}" class="flex flex-row items-center h-10 px-3 rounded-lg {% if item.route == app.request.get('_route') %}text-gray-700 bg-gray-100{% else %}text-gray-300 hover:bg-gray-100 hover:text-gray-700{% endif %}">
+                                    <span class="ml-3">{{ item.label }}</span>
+                                </a>
+                            </li>
+                        {% endfor %}
+                        <li class="my-px">
+                            <a href="{{ url('app_logout') }}" class="flex flex-row items-center h-10 px-3 rounded-lg text-gray-300 hover:bg-gray-100 hover:text-gray-700">
+                                <span class="flex items-center justify-center text-lg text-red-400">
+                                    <svg fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" stroke="currentColor" class="h-6 w-6">
+                                        <path d="M8 11V7a4 4 0 118 0m-4 8v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2z" />
+                                    </svg>
+                                </span>
+                                <span class="ml-3">Logout</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </aside>
+            <main class="main flex flex-col flex-grow -ml-64 md:ml-0 transition-all duration-150 ease-in">
+                <header class="header bg-white shadow py-4 px-4">
+                    <div class="header-content flex items-center flex-row">
+                        <div class="flex ml-auto">
+                            <a href="#" class="flex flex-row items-center">
+                                <span class="flex flex-col ml-2">
+                                    <span class="truncate w-20 font-semibold tracking-wide leading-none">{{ app.user.name }}</span>
+                                </span>
+                            </a>
+                        </div>
+                    </div>
+                </header>
+                <div class="main-content flex flex-col flex-grow p-4">
+                    <h1 class="font-bold text-2xl text-gray-700 {% block title_class %}{% endblock %}">{{ block('title') }}</h1>
+                    {% include 'default/flash_messages.html.twig' %}
+                    <!-- flex-grow can use -->
+                    <div class="flex flex-col bg-white rounded mt-4 {% block body_class %}{% endblock %}">{% block body %}{% endblock %}</div>
+                </div>
+            </main>
+        </div>
+        <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+        <script src="/assets/app.js"></script>
+    </body>
+</html>

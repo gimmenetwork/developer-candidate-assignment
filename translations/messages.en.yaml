@@ -1,0 +1,13 @@
+form:
+    create: 'Create a %label%'
+    edit: 'Edit %label% (#%entity_id%)'
+
+choose:
+    author: 'Choose an author'
+    genre: 'Choose a genre'
+    reader: 'Choose a reader'
+
+not.found: Not found
+unauthorized.action: Unauthorized Action
+delete.success: The item is deleted successfully.
+book.not.available: The book is not available for lease.
