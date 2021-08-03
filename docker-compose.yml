@@ -1,0 +1,34 @@
+version: '3.7'
+
+services:
+  
+  
+  postgres:
+    container_name: postgres
+    image: postgres:12
+    networks:
+      - webnet
+    environment:
+      POSTGRES_PASSWORD: secret
+      POSTGRES_USER: dev
+      POSTGRES_DB: rbac
+      PG_DATA: /var/lib/postgresql/data
+    ports:
+      - 5432:5432
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+  adminer:
+    container_name: adminer
+    image: adminer
+    restart: always
+    ports:
+      - 8080:8080
+    networks:
+      - webnet
+
+networks:
+  webnet:
+
+volumes:
+  pgdata:
