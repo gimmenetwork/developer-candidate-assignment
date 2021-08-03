@@ -13,7 +13,7 @@ Symfony 5 + PHP8 + DDD + Docker + JSON responses
 ## About <a name = "about"></a>
 Symfony 5 REST API Library APP, inclusive of:
 
-- *JWT* (lexik/jwt-authentication-bundle) for authentication
+- *JWT* (lexik/jwt-authentication-bundle) for user authentication
 - *DDD* Domain Driven Design
 - *Docker* to set up DB and run the app
 - *Doctrine*
@@ -68,7 +68,8 @@ make code-coverage
 
 #### Improvements
 - Add validation for request parameters
-- Use (de)serialization to handle request parameters and response data
-- Log exeption messages
+- Log exception messages
+- Better messages
 - Add api version
 - Add UI
+- Use oauth for user authentication
