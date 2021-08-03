@@ -6,6 +6,7 @@ Symfony 5 + PHP8 + DDD + Docker + JSON responses
 ## Table of Contents
 + [About](#about)
 + [Test](#test)
++ [Considerations](#considerations)
 
 
 
@@ -44,6 +45,8 @@ make load-fixtures
 
 [library-api.postman_collection.json](docs/postman/library-api.postman_collection.json)
 
+## Tests <a name = "test"></a>
+
 ### Running PHPUnit Tests
 
 #### Install test database
@@ -60,3 +63,12 @@ bin/phpunit
 ```bash
 make code-coverage
 ```
+
+## Considerations <a name = "considerations"></a>
+
+#### Improvements
+- Add validation for request parameters
+- Use (de)serialization to handle request parameters and response data
+- Log exeption messages
+- Add api version
+- Add UI
