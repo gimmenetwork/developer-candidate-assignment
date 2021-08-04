@@ -9,12 +9,11 @@ use Symfony\Component\Routing\Annotation\Route;
 use App\Entity\Book;
 use App\Repository\BookRepository;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Component\Serializer\SerializerInterface;
 
 class BookController extends AbstractController
 {
     /**
-     * @Route("/book", name="book")
+     * @Route("/books", name="book_list")
      */
     public function index(BookRepository $bookRepository): Response
     {
@@ -25,15 +24,28 @@ class BookController extends AbstractController
         ]);
     }
 
-
+    /**
+     * @Route("/books/create", name="book_add")
+     */
+    public function create(): Response
+    {
+        return $this->render('book/create.html.twig');
+    }
 
     /**
-     * @Route("/book/{id}", name="book_show")
+     * @Route("/books", name="book_insert", methods={"POST"})
      */
-    public function show(Book $book, SerializerInterface $serializer): Response
+    public function insert(): Response
     {
-        $b = $serializer->serialize($book, 'json');
-        return new Response($b);
 
+        // return $this->redirectToRoute('book_list');
+    }
+
+    /**
+     * @Route("/books/{id}", name="book_show")
+     */
+    public function show(Book $book): Response
+    {
+        return $this->json($book);
     }
 }
