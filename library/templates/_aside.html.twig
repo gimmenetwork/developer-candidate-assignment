@@ -23,8 +23,8 @@
         <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
           <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
-          <li class="nav-item">
-            <a href="#" class="nav-link">
+          <li class="nav-item {% if 'readers_' in app.request.attributes.get('_route') %} menu-open {% endif %}">
+            <a href="#" class="nav-link {% if 'readers_' in app.request.attributes.get('_route') %} active {% endif %}">
               <i class="nav-icon fas fa-user"></i>
               <p>
                 Readers
@@ -33,20 +33,20 @@
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="/index.html" class="nav-link">
+                <a href="{{ path('readers_index') }}" class="nav-link{% if app.request.attributes.get('_route') == 'readers_index' %} active {% endif %}">
                   <i class="far fa-circle nav-icon"></i>
                   <p>List</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="/index2.html" class="nav-link">
+                <a href="{{ path('readers_new') }}" class="nav-link{% if app.request.attributes.get('_route') == 'readers_new' %} active {% endif %}">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Add</p>
                 </a>
               </li>
             </ul>
           </li>
-          <li class="nav-item menu-open">
+          <li class="nav-item {% if 'book_' in app.request.attributes.get('_route') %} menu-open {% endif %}">
             <a href="#" class="nav-link {% if 'book_' in app.request.attributes.get('_route') %} active {% endif %}">
               <i class="nav-icon fas fa-book"></i>
               <p>

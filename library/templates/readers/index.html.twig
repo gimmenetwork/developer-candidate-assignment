@@ -1,19 +1,19 @@
 {% extends 'layout.html.twig' %}
 
-{% block title %}Book index{% endblock %}
+{% block title %}Readers index{% endblock %}
 
 {% block content %}
-    
+
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1>Books</h1>
+            <h1>Readers</h1>
           </div>
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
-              <li class="breadcrumb-item"><a href="{{ path('book_index') }}">Books</a></li>
+              <li class="breadcrumb-item"><a href="{{ path('readers_index') }}">Readers</a></li>
               <li class="breadcrumb-item active">List</li>
             </ol>
           </div>
@@ -37,24 +37,20 @@
                   <tr>
                     <th>ID</th>
                     <th>Name</th>
-                    <th>Author</th>
-                    <th>Genre</th>
                     <th>Show</th>
                     <th>Edit</th>
                   </tr>
                   </thead>
                   <tbody>
-                  {% for book in books %}
+                  {% for reader in readers %}
                   <tr>
-                    <td>{{ book.id }}</td>
-                    <td>{{ book.name }}</td>
-                    <td>{{ book.author }}</td>
-                    <td>{{ book.genre }}</td>
+                    <td>{{ reader.id }}</td>
+                    <td>{{ reader.name }}</td>
                     <td>
-                        <a href="{{ path('book_show', {'id': book.id}) }}" class="btn btn-block btn-sm btn-info">Show</a>
+                        <a href="{{ path('readers_show', {'id': reader.id}) }}" class="btn btn-block btn-sm btn-info">Show</a>
                     </td>
                     <td>
-                        <a href="{{ path('book_edit', {'id': book.id}) }}" class="btn btn-block btn-sm btn-warning">Edit</a>
+                        <a href="{{ path('readers_edit', {'id': reader.id}) }}" class="btn btn-block btn-sm btn-warning">Edit</a>
                     </td>
                   </tr>
                 {% else %}
@@ -78,6 +74,7 @@
     <!-- /.content -->
 
 {% endblock %}
+
 
 {% block javascripts %}
 <script>
