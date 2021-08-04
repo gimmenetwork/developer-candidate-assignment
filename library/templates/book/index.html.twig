@@ -1,9 +1,9 @@
 {% extends 'layout.html.twig' %}
 
-{% block title %}Books!{% endblock %}
+{% block title %}Book index{% endblock %}
 
 {% block content %}
-
+    
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <div class="container-fluid">
@@ -13,7 +13,7 @@
           </div>
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
-              <li class="breadcrumb-item"><a href="#">Books</a></li>
+              <li class="breadcrumb-item"><a href="{{ path('book_index') }}">Books</a></li>
               <li class="breadcrumb-item active">List</li>
             </ol>
           </div>
@@ -21,7 +21,7 @@
       </div><!-- /.container-fluid -->
     </section>
 
-    <!-- Main content -->
+<!-- Main content -->
     <section class="content">
       <div class="container-fluid">
         <div class="row">
@@ -39,8 +39,8 @@
                     <th>Name</th>
                     <th>Author</th>
                     <th>Genre</th>
+                    <th>Show</th>
                     <th>Edit</th>
-                    <th>Delete</th>
                   </tr>
                   </thead>
                   <tbody>
@@ -50,9 +50,17 @@
                     <td>{{ book.name }}</td>
                     <td>{{ book.author }}</td>
                     <td>{{ book.genre }}</td>
-                    <td><a href="/books/{{ book.id }}/edit" class="btn btn-block btn-sm btn-primary">Edit</a></td>
-                    <td><a href="/books/{{ book.id }}/delete" class="btn btn-block btn-sm btn-danger">Delete</a></td>
+                    <td>
+                        <a href="{{ path('book_show', {'id': book.id}) }}" class="btn btn-block btn-sm btn-info">Show</a>
+                    </td>
+                    <td>
+                        <a href="{{ path('book_edit', {'id': book.id}) }}" class="btn btn-block btn-sm btn-warning">Edit</a>
+                    </td>
                   </tr>
+                {% else %}
+                    <tr>
+                        <td colspan="5">no records found</td>
+                    </tr>
                   {% endfor %}
                   </tbody>
                 </table>
@@ -68,7 +76,10 @@
       <!-- /.container-fluid -->
     </section>
     <!-- /.content -->
+
 {% endblock %}
+
+
 
 
 {% block javascripts %}
