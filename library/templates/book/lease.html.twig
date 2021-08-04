@@ -70,15 +70,15 @@
                   </tr>
                   </thead>
                   <tbody>
-                  {% for reader in readers %}
-                  <tr>
-                    <td>{{ reader.id }}</td>
-                    <td>{{ reader.name }}</td>
-                    <td>
-                        <a href="{{ path('book_lease2reader', {'id': book.id, 'rid': reader.id}) }}" class="btn btn-block btn-sm btn-info">Lease</a>
-                    </td>
-                  </tr>
-                {% else %}
+                  {% for reader in readers|filter(b => b.allowed) %}
+                    <tr>
+                      <td>{{ reader.id }}</td>
+                      <td>{{ reader.name }}</td>
+                      <td>
+                          <a href="{{ path('book_lease2reader', {'id': book.id, 'rid': reader.id}) }}" class="btn btn-block btn-sm btn-warning">Lease</a>
+                      </td>
+                    </tr>
+                  {% else %}
                     <tr>
                         <td colspan="5">no records found</td>
                     </tr>

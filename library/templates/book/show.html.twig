@@ -36,26 +36,33 @@
                         <tr>
                             <th>Id</th>
                             <td>{{ book.id }}</td>
+                            <td></td>
                         </tr>
                         <tr>
                             <th>Name</th>
                             <td>{{ book.name }}</td>
+                            <td></td>
                         </tr>
                         <tr>
                             <th>Author</th>
                             <td>{{ book.author }}</td>
+                            <td></td>
                         </tr>
                         <tr>
                             <th>Genre</th>
                             <td>{{ book.genre }}</td>
+                            <td></td>
                         </tr>
                         {% if book.available %}
                         <tr>
                             <th>Reader</th>
                             <td>
-                              <a href="{{ path('book_show', {'id': book.id}) }}" >
+                              <a href="{{ path('readers_show', {'id': book.reader.id}) }}" >
                                 {{ book.reader.name }}
                               </a>
+                            </td>
+                            <td>
+                              <a href="{{ path('book_release', {'id': book.id}) }}" class="btn btn-sm btn-success pull-right">Release</a>
                             </td>
                         </tr>
                         {% else %}

@@ -80,4 +80,9 @@ class Readers
 
         return $this;
     }
+
+    public function isAllowed(): bool
+    {
+        return $this->books->count() < 3;
+    }
 }

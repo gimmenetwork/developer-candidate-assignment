@@ -105,6 +105,19 @@ class BookController extends AbstractController
         ]);
     }
 
+    /**
+     * @Route("/{id}/release", name="book_release", methods={"GET"})
+     */
+    public function release(Book $book, ReadersRepository $readersRepository): Response
+    {
+        $book->setReader(null);
+        $entityManager = $this->getDoctrine()->getManager();
+        $entityManager->persist($book);
+        $entityManager->flush();
+
+        return $this->redirectToRoute('book_index');
+    }
+
 
     /**
      * @Route("/{id}/lease2reader/{rid}", name="book_lease2reader", methods={"GET","POST"})
@@ -112,6 +125,11 @@ class BookController extends AbstractController
     public function leaseToReader(Request $request, Book $book, $rid, ReadersRepository $readersRepository): Response
     {
         $reader = $readersRepository->find($rid);
+        
+        if (!$reader->isAllowed()) {
+            throw new Exception('Reader is not allowed to get more books!');
+        }
+
         $book->setReader($reader);
         $entityManager = $this->getDoctrine()->getManager();
         $entityManager->persist($book);

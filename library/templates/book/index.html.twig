@@ -39,6 +39,7 @@
                     <th>Name</th>
                     <th>Author</th>
                     <th>Genre</th>
+                    <th>Reader</th>
                     <th>Show</th>
                     <th>Edit</th>
                   </tr>
@@ -50,6 +51,17 @@
                     <td>{{ book.name }}</td>
                     <td>{{ book.author }}</td>
                     <td>{{ book.genre }}</td>
+                    <td>
+                      {% if book.available %}
+                        <a href="{{ path('readers_show', {'id': book.reader.id}) }}" >
+                          {{ book.reader.name }}
+                        </a>
+                      {% else %}
+                        <a href="{{ path('book_lease', {'id': book.id}) }}" class="btn btn-primary">
+                          Lease to reader
+                        </a>
+                      {% endif %}
+                    </td>
                     <td>
                         <a href="{{ path('book_show', {'id': book.id}) }}" class="btn btn-block btn-sm btn-info">Show</a>
                     </td>
