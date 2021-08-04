@@ -27,6 +27,22 @@ class BookController extends AbstractController
     }
 
     /**
+     * @Route("/search", name="book_search", methods={"GET"})
+     */
+    public function search(Request $request, BookRepository $bookRepository): Response
+    {
+        $params = [];
+        if ($request->query->has('name')) $params['name'] = $request->query->get('name');
+        if ($request->query->has('author')) $params['author'] = $request->query->get('author');
+        if ($request->query->has('genre')) $params['genre'] = $request->query->get('genre');
+        $limit = $request->query->get('limit');
+        $offset = $request->query->get('offset');
+        $books = $bookRepository->findBy($params, [], $limit, $offset);
+        
+        return $this->json($books, 200, [], ['ignored_attributes' => ['reader']]);
+    }
+
+    /**
      * @Route("/new", name="book_new", methods={"GET","POST"})
      */
     public function new(Request $request): Response
@@ -136,7 +152,7 @@ class BookController extends AbstractController
         $entityManager->persist($reader);
         $entityManager->flush();
 
-        return $this->redirectToRoute('book_index');
+        return $this->$rectToRoute('book_index');
     }
 
 }
