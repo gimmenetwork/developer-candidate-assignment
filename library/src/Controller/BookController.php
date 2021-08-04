@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Book;
 use App\Form\BookType;
 use App\Repository\BookRepository;
+use App\Repository\ReadersRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -91,4 +92,33 @@ class BookController extends AbstractController
 
         return $this->redirectToRoute('book_index', [], Response::HTTP_SEE_OTHER);
     }
+
+
+    /**
+     * @Route("/{id}/lease", name="book_lease", methods={"GET"})
+     */
+    public function leaseList(Book $book, ReadersRepository $readersRepository): Response
+    {
+        return $this->render('book/lease.html.twig', [
+            'book' => $book,
+            'readers' => $readersRepository->findAll(),
+        ]);
+    }
+
+
+    /**
+     * @Route("/{id}/lease2reader/{rid}", name="book_lease2reader", methods={"GET","POST"})
+     */
+    public function leaseToReader(Request $request, Book $book, $rid, ReadersRepository $readersRepository): Response
+    {
+        $reader = $readersRepository->find($rid);
+        $book->setReader($reader);
+        $entityManager = $this->getDoctrine()->getManager();
+        $entityManager->persist($book);
+        $entityManager->persist($reader);
+        $entityManager->flush();
+
+        return $this->redirectToRoute('book_index');
+    }
+
 }

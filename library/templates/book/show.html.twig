@@ -49,6 +49,23 @@
                             <th>Genre</th>
                             <td>{{ book.genre }}</td>
                         </tr>
+                        {% if book.available %}
+                        <tr>
+                            <th>Reader</th>
+                            <td>
+                              <a href="{{ path('book_show', {'id': book.id}) }}" >
+                                {{ book.reader.name }}
+                              </a>
+                            </td>
+                        </tr>
+                        {% else %}
+                        <tr>
+                            <th>Available</th>
+                            <td>
+                              <a href="{{ path('book_lease', {'id': book.id}) }}" class="btn btn-primary">Lease to reader</a>
+                            </td>
+                        </tr>
+                        {% endif %}
                     </tbody>
                 </table>
               </div>

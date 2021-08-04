@@ -32,6 +32,11 @@ class Book
      */
     private $genre;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=Readers::class, inversedBy="books")
+     */
+    private $reader;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -71,5 +76,22 @@ class Book
         $this->genre = $genre;
 
         return $this;
+    }
+
+    public function getReader(): ?Readers
+    {
+        return $this->reader;
+    }
+
+    public function setReader(?Readers $reader): self
+    {
+        $this->reader = $reader;
+
+        return $this;
+    }
+
+    public function isAvailable(): bool
+    {
+        return $this->reader !== null;
     }
 }
