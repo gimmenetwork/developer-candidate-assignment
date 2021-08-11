@@ -1,0 +1,15 @@
+#index:
+#    path: /
+#    controller: App\Controller\DefaultController::index
+
+api_login_check:
+    path: /api/login-check
+
+gesdinet_jwt_refresh_token:
+    path:       /api/token/refresh
+    controller: gesdinet.jwtrefreshtoken::refresh
+    
+list_all_books:
+    path: /books
+    controller: App\Controller\BookController:indexAction
+    methods: [GET]
