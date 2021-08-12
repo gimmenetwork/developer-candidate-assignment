@@ -1,0 +1,25 @@
+GimmeBook\Infrastructure\Entity\Reader:
+  type: entity
+  repositoryClass: GimmeBook\Infrastructure\Repository\ReaderRepositoryInterface
+  table: reader
+  indexes:
+    login__idx:
+      columns: [ login ]
+  id:
+    id:
+      type: integer
+      generator:
+        strategy: AUTO
+  fields:
+    login:
+      type: string
+      length: 100
+      column: login
+      unique: true
+    password:
+      type: string
+      length: 72
+      column: password
+    roleId:
+      type: smallint
+      column: role_id

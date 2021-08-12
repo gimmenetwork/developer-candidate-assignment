@@ -1,0 +1,52 @@
+{
+    "name": "axmetov/gimme-book",
+    "type": "project",
+    "authors": [
+        {
+            "name": "axmetov",
+            "email": "ildar.axmetov@gmail.com"
+        }
+    ],
+    "config": {
+        "platform": {
+            "php": "8.0"
+        }
+    },
+    "scripts": {
+        "test": [
+            "phpunit tests/"
+        ]
+    },
+    "require": {
+        "ext-mysqli": "*",
+        "ext-pdo": "*",
+        "symfony/http-foundation": "^5.3",
+        "symfony/http-kernel": "^5.3",
+        "symfony/dependency-injection": "^5.3",
+        "doctrine/annotations": "^1.13",
+        "doctrine/orm": "^2.9",
+        "doctrine/migrations": "^3.2",
+        "doctrine/persistence": "^2.2",
+        "symfony/routing": "^5.3",
+        "symfony/config": "^5.3",
+        "symfony/mime": "^5.3",
+        "symfony/cache": "^5.3",
+        "symfony/yaml": "^5.3",
+        "symfony/expression-language": "^5.3",
+        "symfony/proxy-manager-bridge": "^5.3",
+        "symfony/var-dumper": "^5.3",
+        "firebase/php-jwt": "^5.4",
+        "twig/twig": "^3.0",
+        "symfony/twig-bridge": "^5.3"
+    },
+    "autoload": {
+        "psr-4": {
+            "GimmeBook\\": "src/"
+        }
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^9.5",
+        "symfony/test-pack": "^1.0",
+        "mockery/mockery": "^1.4"
+    }
+}

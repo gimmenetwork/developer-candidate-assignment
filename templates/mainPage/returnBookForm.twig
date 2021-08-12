@@ -1,0 +1,12 @@
+<div class="col-start-8 col-end-9 text-center">
+  {% if "now"|date('m/d/Y') > book.whenToReturn|date("m/d/Y") %}
+    <p class="">Expired!</p>
+    <p class="text-sm">Return till {{ book.whenToReturn|date("m/d/Y") }}</p>
+  {% endif %}
+</div>
+<form action="{{ path('returnBook', { 'bookId': book.id }) }}" method="post"
+      class="col-start-8 col-end-9 text-center">
+  {% if "now"|date('m/d/Y') <= book.whenToReturn|date("m/d/Y") %}
+    <button class="bg-blue-300 w-3/4 mx-auto my-5 rounded">Return book</button>
+  {% endif %}
+</form>

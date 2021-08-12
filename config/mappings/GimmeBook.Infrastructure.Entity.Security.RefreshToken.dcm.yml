@@ -1,0 +1,26 @@
+GimmeBook\Infrastructure\Entity\Security\RefreshToken:
+  type: entity
+  repositoryClass: GimmeBook\Infrastructure\Repository\Security\RefreshTokenRepositoryInterface
+  table: refresh_token
+  indexes:
+    user_device__idx:
+      columns: [ user_id, device_id ]
+  id:
+    uuid:
+      type: guid
+      generator:
+        strategy: UUID
+  fields:
+    userId:
+      type: integer
+      column: user_id
+    createdAt:
+      type: datetime_immutable
+      column: created_at
+    expiresIn:
+      type: integer
+      column: expires_in
+    deviceId:
+      type: string
+      length: 20
+      column: device_id

@@ -1,0 +1,22 @@
+{% extends 'base.twig' %}
+
+{% block content %}
+<div id="auth-form">
+  <form method="post" class="flex flex-col">
+    <h1 class="text-xl text-center my-3.5">{{ formTitle }}</h1>
+    <label class="text-center">
+      Login
+      <input type="text" name="login" class="ml-1 border-gray-300 border">
+    </label>
+    <label class="text-center my-3.5">
+      Password
+      <input type="password" name="password" class="ml-1 border-gray-300 border">
+    </label>
+    <div id="bottom" class="w-2/3 text-center m-auto">
+      <a class="text-center underline block text-blue-600" href="{{ anotherFormUrl }}">{{ anotherFormTitle }}</a>
+      <button type="submit" class="px-5 py-2 bg-blue-600 text-white mt-4">{{ buttonText }}</button>
+    </div>
+    <input type="hidden" name="deviceId" value="DUMP!"/>
+  </form>
+</div>
+{% endblock %}

@@ -1,0 +1,111 @@
+services:
+  _defaults:
+    autowire: true
+    autoconfigure: true
+    bind:
+      Doctrine\ORM\EntityManager: '@em'
+
+  # TWIG
+
+  Twig\Loader\FilesystemLoader:
+    arguments: [ ../templates ]
+
+  Twig\Environment:
+    arguments: [ '@Twig\Loader\FilesystemLoader', { scache: ../cache/twig } ]
+    calls:
+      - addExtension: ['@Symfony\Bridge\Twig\Extension\RoutingExtension']
+
+  Symfony\Bridge\Twig\Extension\RoutingExtension: ~
+
+  GimmeBook\Domain\TwigDataPopulator\ReaderDataPopulator: ~
+  GimmeBook\Domain\TwigDataPopulator\SearchDictionaryPopulator: ~
+
+  # CONTROLLER
+
+  GimmeBook\Application\Controller\:
+    resource: ../src/Application/Controller
+    public: true
+
+  GimmeBook\Application\Service\RedirectToIndexResponseProducer: ~
+
+  # DATABASE
+
+  em.factory:
+    class: GimmeBook\Infrastructure\Core\Doctrine\Factory\EntityManagerFactory
+    arguments:
+      $dbName: '%env(MYSQL_DATABASE)%'
+      $user: '%env(MYSQL_USER)%'
+      $password: '%env(MYSQL_PASSWORD)%'
+      $host: '%env(MYSQL_HOST)%'
+
+  em:
+    class: Doctrine\ORM\EntityManager
+    factory: ['@em.factory', createEntityManager]
+    public: true
+
+  GimmeBook\Infrastructure\Repository\Book\AuthorRepository: ~
+  GimmeBook\Infrastructure\Repository\Book\AuthorRepositoryInterface:
+    alias: GimmeBook\Infrastructure\Repository\Book\AuthorRepository
+
+  GimmeBook\Infrastructure\Repository\Book\GenreRepository: ~
+  GimmeBook\Infrastructure\Repository\Book\GenreRepositoryInterface:
+    alias: GimmeBook\Infrastructure\Repository\Book\GenreRepository
+
+  GimmeBook\Infrastructure\Repository\Book\BookRepository: ~
+  GimmeBook\Infrastructure\Repository\Book\BookRepositoryInterface:
+    alias: GimmeBook\Infrastructure\Repository\Book\BookRepository
+
+  GimmeBook\Infrastructure\Repository\LeaseRepository: ~
+  GimmeBook\Infrastructure\Repository\LeaseRepositoryInterface:
+    alias: GimmeBook\Infrastructure\Repository\LeaseRepository
+
+  GimmeBook\Infrastructure\Repository\ReaderRepository: ~
+  GimmeBook\Infrastructure\Repository\ReaderRepositoryInterface:
+    alias: GimmeBook\Infrastructure\Repository\ReaderRepository
+
+  GimmeBook\Infrastructure\Repository\Security\RefreshTokenRepository: ~
+  GimmeBook\Infrastructure\Repository\Security\RefreshTokenRepositoryInterface:
+    alias: GimmeBook\Infrastructure\Repository\Security\RefreshTokenRepository
+
+  GimmeBook\Infrastructure\Query\SearchBooksQuery: ~
+
+  # EVENT
+
+  event_dispatcher:
+    class: Symfony\Component\EventDispatcher\EventDispatcher
+    public: true
+
+  GimmeBook\Application\EventSubscriber\TwigDataPopulatorEventSubscriber:
+    arguments:
+      $populators:
+        - '@GimmeBook\Domain\TwigDataPopulator\ReaderDataPopulator'
+        - '@GimmeBook\Domain\TwigDataPopulator\SearchDictionaryPopulator'
+    tags: ['kernel.event_subscriber']
+
+  GimmeBook\Application\EventSubscriber\HttpExceptionEventSubscriber:
+    tags: ['kernel.event_subscriber']
+
+  GimmeBook\Application\EventSubscriber\Security\JwtTokenRefreshEventSubscriber:
+    tags: ['kernel.event_subscriber']
+
+  # PROVIDER
+
+  GimmeBook\Domain\Provider\SearchDictionaryDataProvider: ~
+
+  GimmeBook\Domain\Security\JwtKeyProvider: ~
+
+  GimmeBook\Domain\Security\JwtTokensProducer: ~
+
+  # VERIFICATION OF REQUEST
+
+  jwt_verifier:
+    class: GimmeBook\Domain\Security\Verifier\JwtVerifier
+  role_verifier:
+    class: GimmeBook\Domain\Security\Verifier\RoleVerifier
+
+  GimmeBook\Application\EventSubscriber\Security\VerificationEventSubscriber:
+    calls:
+      - addVerifier: ['@jwt_verifier']
+      - addVerifier: ['@role_verifier']
+    tags: ['kernel.event_subscriber']
+

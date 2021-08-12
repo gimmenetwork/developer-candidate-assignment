@@ -1,0 +1,42 @@
+GimmeBook\Infrastructure\Entity\Lease:
+  type: entity
+  repositoryClass: GimmeBook\Infrastructure\Repository\LeaseRepositoryInterface
+  table: lease
+  indexes:
+    book__idx:
+      columns: [ book_id ]
+    reader__idx:
+      columns: [ reader_id ]
+    when_leased__idx:
+      columns: [ when_leased ]
+    when_to_return__idx:
+      columns: [ when_to_return ]
+    when_returned__idx:
+      columns: [ when_returned ]
+  id:
+    id:
+      type: integer
+      generator:
+        strategy: AUTO
+  fields:
+    whenLeased:
+      type: datetime_immutable
+      column: when_leased
+    whenToReturn:
+      type: datetime_immutable
+      column: when_to_return
+    whenReturned:
+      type: datetime_immutable
+      column: when_returned
+      nullable: true
+  oneToOne:
+    book:
+      targetEntity: GimmeBook\Infrastructure\Entity\Book\Book
+      joinColumn:
+        name: book_id
+        referencedColumnName: id
+    reader:
+      targetEntity: GimmeBook\Infrastructure\Entity\Reader
+      joinColumn:
+        name: reader_id
+        referencedColumnName: id

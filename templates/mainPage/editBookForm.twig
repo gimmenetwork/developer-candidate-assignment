@@ -1,0 +1,35 @@
+<form action="{{ path('editBook', { 'bookId': book.id }) }}"
+      method="post"
+      class="my-5 flex flex-col"
+>
+  <label>
+    Title
+    <input type="text" name="title" value="{{ book.title }}"
+     class="border border-gray-300 rounded"/>
+  </label>
+  <label>
+    Year
+    <input type="number" name="year" value="{{ book.year }}"
+     class="border border-gray-300 rounded"/>
+  </label>
+  <label>
+    Count in stock
+    <input type="number" name="count" value="{{ book.countInStock }}"
+     class="border border-gray-300 rounded"/>
+  </label>
+  <label>
+    Total in stock
+    <input type="number" name="total" value="{{ book.totalCount }}"
+     class="border border-gray-300 rounded"/>
+  </label>
+  <label>
+    Available to lease
+    <input type="checkbox" name="available" {% if book.availableForLeasing %}checked{% endif %}
+     class="border border-gray-300 rounded"/>
+  </label>
+  <button type="submit" class="bg-blue-300 w-3/4 mx-auto my-5 rounded">Save</button>
+</form>
+<form action="{{ path('removeBook', { 'bookId': book.id }) }}" method="post">
+  <button type="submit" onclick="confirm('Are you sure want to delete the book?')"
+          class="bg-red-300 w-3/4 mx-auto my-5 rounded">Remove for ever</button>
+</form>

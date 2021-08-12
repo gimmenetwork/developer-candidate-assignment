@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+{% block head %}
+<link rel="stylesheet" href="assets/tailwind.css"/>
+  <script src="assets/bundle.js"></script>
+<title>GimmeBook</title>
+{% endblock %}
+</head>
+<body class="min-h-screen flex flex-row bg-gray-100 font-mono">
+<div id="content" class="flex flex-col justify-center px-20 py-6" style="width: 90vw">
+  <h1 id="logo" class="font-bold py-3 text-center text-4xl text-blue-500">
+    <a href="{{ path('index') }}">GimmeBook!</a>
+  </h1>
+  {% block content %}{% endblock %}
+  <div class="h-16 flex flex-row justify-center align-middle pt-5">
+    {% block footer %}
+      WOW footer!
+    {% endblock %}
+  </div>
+</div>
+{% include 'sidebar/sidebar.twig' %}
+<p id="error" style="display: none;">{{ error }}</p>
+</body>
+</html>

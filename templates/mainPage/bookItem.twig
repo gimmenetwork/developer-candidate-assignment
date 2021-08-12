@@ -1,0 +1,38 @@
+<div class="bg-white shadow-sm mb-2 px-3 py-4 rounded">
+  <div class="grid grid-cols-9">
+    <div class="col-start-1 col-end-7">
+      <p class="text-2xl mb-2">{{ book.title }}</p>
+      <div class="row">
+        <ul class="authors-list">
+          {% for author in book.authors %}
+            <span data-url="{{ path('searchBooks', { 'author': author.id }) }}"
+               class="underline text-blue-600 cursor-pointer text-sm"
+               title="Search books by author">{{ author.name }}</span>
+          {% endfor %}
+        </ul>
+        <ul class="mt-2">
+          {% for genre in book.genres %}
+            <span data-url="{{ path('searchBooks', { 'genre': genre.id }) }}"
+               class="underline text-blue-600 cursor-pointer text-sm"
+               title="Search books by genre">{{ genre.name }}</span>
+          {% endfor %}
+        </ul>
+      </div>
+    </div>
+    <div class="col-start-7 col-end-8 text-center">
+      <p class="text-2xl">{{ book.year }}</p>
+      <p class="text-sm text-gray-500">year</p>
+    </div>
+    {% if not book.whenToReturn %}
+      {% include 'mainPage/leaseBookForm.twig' %}
+    {% else %}
+      {% include 'mainPage/returnBookForm.twig' %}
+    {% endif %}
+  </div>
+  {% if isAdmin %}
+    <details>
+      <summary>Edit this book</summary>
+      {% include 'mainPage/editBookForm.twig' %}
+    </details>
+  {% endif %}
+</div>

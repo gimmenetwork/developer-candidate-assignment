@@ -1,0 +1,8 @@
+GimmeBook\Infrastructure\Entity\Security\Access\Role:
+  type: entity
+  table: role
+  id:
+    id:
+      type: integer
+      generator:
+        strategy: AUTO

@@ -1,0 +1,5 @@
+vendor
+.idea
+docker/mysql/data
+docker/nginx/log
+node_modules

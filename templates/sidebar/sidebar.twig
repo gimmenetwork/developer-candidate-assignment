@@ -1,0 +1,43 @@
+<div id="sidebar" class="bg-white px-4 py-20 border-l-2 border-gray-200">
+  {% if readerData %}
+    <form action="{{ path('logoutAction') }}" method="post">
+      <p id="username">Hello, {{ readerData.login }}!</p>
+      <button class="text-blue-600 underline" type="submit">Logout</button>
+    </form>
+    <form action="{{ path('editReader', { 'readerId': readerData.id }) }}" method="post" class="flex flex-col">
+      <strong class="mt-2.5 text-center">Edit my data</strong>
+      <label class="text-center">
+        Login
+        <input type="text" name="newLogin" value="{{ readerData.login }}" class="mt-2 border rounded border-gray-300"/>
+      </label>
+      <label class="text-center">
+        Password
+        <input type="password" name="newPassword" class="mt-2 border rounded border-gray-300"/>
+      </label>
+      <button type="submit" class="bg-green-300 w-3/4 mx-auto my-5 rounded">Save new data</button>
+    </form>
+  {% else %}
+    <a class="text-blue-600 underline" href="{{ path('loginPage') }}">Login</a>
+  {% endif %}
+  <div data-url="{{ path('searchBooks') }}" class="flex flex-col">
+    <p class="italic mt-5 mx-auto my-5">Find a book!</p>
+    <label class="grid grid-cols-2">
+      Author
+      <select name="author" class="border-2 border-gray-300">
+        {% for author in searchDictionary.authors %}
+          <option value="{{ author.id }}">{{ author.name }}</option>
+        {% endfor %}
+      </select>
+    </label>
+    <label class="grid grid-cols-2">
+      Genre
+      <select name="genre" class="border-2 border-gray-300">
+        {% for genre in searchDictionary.genres %}
+          <option value="{{ genre.id }}">{{ genre.name }}</option>
+        {% endfor %}
+      </select>
+    </label>
+    <button id="search-button" type="submit" class="bg-blue-200 w-3/4 mx-auto my-5 rounded">Search</button>
+  </div>
+  <div id="search-results"></div>
+</div>

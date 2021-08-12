@@ -1,0 +1,70 @@
+index:
+  path: /{page}
+  controller: GimmeBook\Application\Controller\MainController::index
+  methods: [GET]
+  defaults:
+    page: 1
+  requirements:
+    page: '\d+'
+account:
+  path: /account
+  controller: GimmeBook\Application\Controller\MainController::account
+  methods: [GET]
+
+notFound:
+  path: /notFound
+  controller: GimmeBook\Application\Controller\MainController::notFound
+  methods: [GET]
+
+signUpPage:
+  path: /signUp
+  controller: GimmeBook\Application\Controller\AuthController::signUpPage
+  methods: [GET]
+signUpAction:
+  path: /signUp
+  controller: GimmeBook\Application\Controller\AuthController::signUpAction
+  methods: [POST]
+loginPage:
+  path: /login
+  controller: GimmeBook\Application\Controller\AuthController::loginPage
+  methods: [GET]
+loginAction:
+  path: /login
+  controller: GimmeBook\Application\Controller\AuthController::loginAction
+  methods: [POST]
+logoutAction:
+  path: /logout
+  controller: GimmeBook\Application\Controller\AuthController::logoutAction
+  methods: [POST]
+
+editReader:
+  path: /reader/{readerId}
+  controller: GimmeBook\Application\Controller\ReaderController::edit
+  methods: [POST]
+
+addBook:
+  path: /book
+  controller: GimmeBook\Application\Controller\BookController::add
+  methods: [POST]
+editBook:
+  path: /book/edit/{bookId}
+  controller: GimmeBook\Application\Controller\BookController::edit
+  methods: [POST]
+removeBook:
+  path: /book/remove/{bookId}
+  controller: GimmeBook\Application\Controller\BookController::remove
+  methods: [POST]
+
+leaseBook:
+  path: /lease/{bookId}
+  controller: GimmeBook\Application\Controller\LeaseController::leaseBook
+  methods: [POST]
+returnBook:
+  path: /lease/return/{bookId}
+  controller: GimmeBook\Application\Controller\LeaseController::returnBook
+  methods: [POST]
+
+searchBooks:
+  path: /api/search
+  controller: GimmeBook\Application\Controller\Api\SearchController::search
+  methods: [ GET ]

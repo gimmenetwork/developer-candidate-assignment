@@ -1,0 +1,62 @@
+GimmeBook\Infrastructure\Entity\Book\Book:
+  type: entity
+  repositoryClass: GimmeBook\Infrastructure\Repository\Book\BookRepositoryInterface
+  table: book
+  indexes:
+    title__idx:
+      columns: [ title ]
+    year__idx:
+      columns: [ year ]
+  id:
+    id:
+      type: integer
+      generator:
+        strategy: AUTO
+  fields:
+    title:
+      type: string
+      length: 100
+      column: title
+    year:
+      type: smallint
+      column: year
+      options:
+        unsigned: true
+    countInStock:
+      type: smallint
+      column: count_in_stock
+      options:
+        unsigned: true
+    totalCount:
+      type: smallint
+      column: total_count
+      options:
+        unsigned: true
+    availableForLeasing:
+      type: boolean
+      column: available_for_leasing
+      options:
+        default: true
+  manyToMany:
+    authors:
+      targetEntity: GimmeBook\Infrastructure\Entity\Book\Author
+      inversedBy: books
+      joinTable:
+        name: book_to_author
+        joinColumns:
+          book_id:
+            referencedColumnName: id
+        inverseJoinColumns:
+          author_id:
+            referencedColumnName: id
+    genres:
+      targetEntity: GimmeBook\Infrastructure\Entity\Book\Genre
+      inversedBy: books
+      joinTable:
+        name: book_to_genre
+        joinColumns:
+          book_id:
+            referencedColumnName: id
+        inverseJoinColumns:
+          genre_id:
+            referencedColumnName: id

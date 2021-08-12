@@ -1,23 +1,64 @@
-# 2021 Developer Assignment
+#Setup
 
-Develop a library application with following features:
+run `docker-compose up -d`
 
-1. Add/Edit/Remove books from stock, each book must have Name, Author, Genre
-2. Add/Edit Readers; each reader must have at least a name
-3. Lease a Book to a Reader, return date is mandatory. Reader can not have more than three books.
-4. Expose restful API that talks JSON for listing books and their availablility, searching by author and by genre
+run `composer install` on your machine
 
-Application must be developed using PHP7.4+ and Symfony 5.x. Solutions employing other frameworks will not be accepted.
+migrations:
 
-Resulting code must have meaningful tests. 
+- run `docker ps` and find PHP image
+- run `docker exec -it <container_id> vendor/bin/doctrine-migrations migrate`
+- press Enter
 
-You can use whatever tools you find necessary and helpful, except jQuery and API Platform.
+database root: root:123root
 
-Bonus points for:
+go to `localhost/`
 
-1. Proper security implementation
-2. Meaningful documentation
-3. Least amount of dependencies
-4. Nice UI and UX
+VOILA!
 
-You will have 72h to complete the task. You will need to fork this repository and create a PR on completion, setting @kstupak as a reviewer.
+##tests
+
+- run `docker ps` and find PHP image
+- run `docker exec -it <container_id> composer test`
+
+# Users
+
+There is already an admin user
+
+admin:123321
+
+He can add/remove/edit books
+
+## New users
+
+Go to sign up page and create an account
+
+## Leasing
+
+To lease or return book you should log in
+
+## Book manipulations
+
+To add/edit/remove a book log in as `admin` with pass `123321`
+
+## Search api
+
+I hadn't time to include it into the frontend. So you can test it with a tool like Postman.
+
+`GET localhost/api/search?author=2&genre=5` you may provide not both but one only
+
+response
+```
+{
+    "books": [
+        {
+            "id": int,
+            "title": string,
+            "year": int,
+            "count_in_stock": int,
+            "total_count": int,
+            "available_for_leasing": bool // AKA soft delete
+        }
+    ]
+}
+```

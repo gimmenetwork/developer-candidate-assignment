@@ -1,0 +1,14 @@
+<div class="col-start-8 col-end-9 text-center">
+  {% if book.countInStock > 0 %}
+    <p class="left-in-stock text-2xl">{{ book.countInStock }}</p>
+    <p class="text-sm text-gray-500">left in stock</p>
+  {% else %}
+    <p class="text-red-400 text-xl">Out of stock</p>
+  {% endif %}
+</div>
+<form action="{{ path('leaseBook', { 'bookId': book.id }) }}" method="post"
+      class="col-start-9 col-end-10 text-center">
+    {% if book.countInStock > 0 %}
+        <button class="bg-blue-400 text-white px-3 py-1 rounded mt-2.5">Lease</button>
+    {% endif %}
+</form>

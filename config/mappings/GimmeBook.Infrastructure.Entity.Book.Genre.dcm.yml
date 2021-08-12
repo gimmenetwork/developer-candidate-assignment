@@ -1,0 +1,21 @@
+GimmeBook\Infrastructure\Entity\Book\Genre:
+  type: entity
+  repositoryClass: GimmeBook\Infrastructure\Repository\Book\GenreRepositoryInterface
+  table: genre
+  indexes:
+    name__idx:
+      columns: [ name ]
+  id:
+    id:
+      type: integer
+      generator:
+        strategy: AUTO
+  fields:
+    name:
+      type: string
+      length: 100
+      column: name
+  manyToMany:
+    books:
+      targetEntity: GimmeBook\Infrastructure\Entity\Book\Book
+      mappedBy: genres

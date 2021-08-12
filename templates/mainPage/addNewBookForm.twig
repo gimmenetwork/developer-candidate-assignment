@@ -1,0 +1,32 @@
+<form action="{{ path('addBook') }}" method="post" class="my-5 flex flex-col border-gray-300 border rounded bg-white p-5">
+  <h3 class="font-bold mb-2">Add new book</h3>
+  <label class="m-2">
+    Title
+    <input type="text" name="title" class="border border-gray-300 rounded"/>
+  </label>
+  <label class="m-2">
+    Year
+    <input type="number" name="year" class="border border-gray-300 rounded"/>
+  </label>
+  <label class="m-2">
+    Total in stock
+    <input type="number" name="total" class="border border-gray-300 rounded"/>
+  </label>
+  <label class="m-2">
+    Author
+    <select name="author" class="border border-gray-300 rounded">
+      {% for author in searchDictionary.authors %}
+        <option value="{{ author.id }}">{{ author.name }}</option>
+      {% endfor %}
+    </select>
+  </label>
+  <label class="m-2">
+    Genre
+    <select name="genre" class="border border-gray-300 rounded">
+      {% for genre in searchDictionary.genres %}
+        <option value="{{ genre.id }}">{{ genre.name }}</option>
+      {% endfor %}
+    </select>
+  </label>
+  <button type="submit" class="bg-blue-300 w-3/4 mx-auto my-5 rounded">Add</button>
+</form>

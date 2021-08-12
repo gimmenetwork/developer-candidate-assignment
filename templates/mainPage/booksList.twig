@@ -1,0 +1,24 @@
+{% extends 'base.twig' %}
+
+{% set isAdmin = readerData and readerData.roleId == 2 %}
+
+{% block content %}
+  <div id="books-list" class="flex flex-col">
+    {% if isAdmin %}
+      {% include 'mainPage/addNewBookForm.twig' %}
+    {% endif %}
+    <em class="mb-4 text-right">sorted by title</em>
+  {% for book in booksList %}
+    {% include 'mainPage/bookItem.twig' %}
+  {% endfor %}
+  </div>
+  <div class="text-center">
+    {% for i in 1..pages %}
+      {% if currentPage == i %}
+        <span class="font-bold">{{ i }}</span>
+      {% else %}
+        <a class="text-blue-600 underline" href="{{ path('index', { 'page': i }) }}">{{ i }}</a>
+      {% endif %}
+    {% endfor %}
+  </div>
+{% endblock %}
