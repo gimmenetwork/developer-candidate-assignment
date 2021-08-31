@@ -1,0 +1,39 @@
+App\Entity\Book:
+    attributes:
+        id:
+            groups: ['Default']
+        name:
+            groups: ['Default']
+        author:
+            groups: ['Default']
+        genre:
+            groups: [ 'Default' ]
+        isAvailable:
+            groups: [ 'Default' ]
+            
+App\Entity\Reader:
+    attributes:
+        id:
+            groups: ['Default']
+        name:
+            groups: ['Default']
+
+App\Entity\Genre:
+    attributes:
+        id:
+            groups: ['Default']
+        name:
+            groups: ['Default']
+            
+Knp\Bundle\PaginatorBundle\Pagination\SlidingPagination:
+    attributes:
+        items:
+            groups: ['Default']
+        totalItemCount:
+            groups: ['Default']
+        itemNumberPerPage:
+            groups: ['Default']
+        pageCount:
+            groups: ['Default']
+        currentPageNumber:
+            groups: ['Default']
